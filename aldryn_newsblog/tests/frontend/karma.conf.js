@@ -25,8 +25,6 @@ module.exports = function (config) {
         files: [
             // these have to be specified in order since
             // dependency loading is not handled yet
-            '../../aldryn_newsblog/boilerplates/bootstrap3/static/js/libs/*.js',
-            '../../aldryn_newsblog/boilerplates/bootstrap3/static/js/addons/*.js',
 
             // tests themselves
             'frontend/unit/*.js',
@@ -43,7 +41,6 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            '../../aldryn_newsblog/boilerplates/bootstrap3/static/js/addons/*.js': ['coverage'],
             // for fixtures
             '**/*.html': ['html2js'],
             '**/*.json': ['json_fixtures']

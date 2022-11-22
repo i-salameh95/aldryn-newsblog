@@ -1,10 +1,8 @@
-#aldryn-apphooks-config
-https://github.com/vThaian/aldryn-apphooks-config/archive/fixes-for-django-20-and-up.zip
+aldryn-apphooks-config
 
 aldryn-categories
 aldryn-people
 django-haystack
-aldryn-boilerplates
 django-taggit
 
 # NOTE: These are for Filer

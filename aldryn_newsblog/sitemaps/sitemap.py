@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
 
 from aldryn_translation_tools.sitemaps import I18NSitemap
 

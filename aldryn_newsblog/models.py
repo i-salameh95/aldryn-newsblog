@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
 
 import django.core.validators
 from django.conf import settings
@@ -10,10 +9,10 @@ from django.db import connection, models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import force_text
 from django.utils.timezone import now
-from django.utils.translation import override, ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import override, gettext
+from django.utils.translation import gettext_lazy as _
 
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
@@ -63,7 +62,7 @@ SQL_IS_TRUE = {
 }[connection.vendor]
 
 
-@python_2_unicode_compatible
+
 class Article(TranslatedAutoSlugifyMixin,
               TranslationHelperMixin,
               TranslatableModel):
@@ -311,13 +310,13 @@ class NewsBlogCMSPlugin(CMSPlugin):
         self.app_config = old_instance.app_config
 
 
-@python_2_unicode_compatible
+
 class NewsBlogArchivePlugin(PluginEditModeMixin, AdjustableCacheModelMixin,
                             NewsBlogCMSPlugin):
     # NOTE: the PluginEditModeMixin is eventually used in the cmsplugin, not
     # here in the model.
     def __str__(self):
-        return ugettext('%s archive') % (self.app_config.get_app_title(), )
+        return gettext('%s archive') % (self.app_config.get_app_title(), )
 
 
 class NewsBlogArticleSearchPlugin(NewsBlogCMSPlugin):
@@ -328,10 +327,10 @@ class NewsBlogArticleSearchPlugin(NewsBlogCMSPlugin):
     )
 
     def __str__(self):
-        return ugettext('%s archive') % (self.app_config.get_app_title(), )
+        return gettext('%s archive') % (self.app_config.get_app_title(), )
 
 
-@python_2_unicode_compatible
+
 class NewsBlogAuthorsPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
     def get_authors(self, request):
         """
@@ -369,13 +368,13 @@ class NewsBlogAuthorsPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
         return sorted(authors, key=lambda x: x.article_count, reverse=True)
 
     def __str__(self):
-        return ugettext('%s authors') % (self.app_config.get_app_title(), )
+        return gettext('%s authors') % (self.app_config.get_app_title(), )
 
 
-@python_2_unicode_compatible
+
 class NewsBlogCategoriesPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
     def __str__(self):
-        return ugettext('%s categories') % (self.app_config.get_app_title(), )
+        return gettext('%s categories') % (self.app_config.get_app_title(), )
 
     def get_categories(self, request):
         """
@@ -414,7 +413,7 @@ class NewsBlogCategoriesPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
         return sorted(categories, key=lambda x: x.article_count, reverse=True)
 
 
-@python_2_unicode_compatible
+
 class NewsBlogFeaturedArticlesPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
     article_count = models.PositiveIntegerField(
         default=1,
@@ -442,15 +441,15 @@ class NewsBlogFeaturedArticlesPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
             return 'featured articles'
         prefix = self.app_config.get_app_title()
         if self.article_count == 1:
-            title = ugettext('featured article')
+            title = gettext('featured article')
         else:
-            title = ugettext('featured articles: %(count)s') % {
+            title = gettext('featured articles: %(count)s') % {
                 'count': self.article_count,
             }
         return '{0} {1}'.format(prefix, title)
 
 
-@python_2_unicode_compatible
+
 class NewsBlogLatestArticlesPlugin(PluginEditModeMixin,
                                    AdjustableCacheModelMixin,
                                    NewsBlogCMSPlugin):
@@ -490,13 +489,13 @@ class NewsBlogLatestArticlesPlugin(PluginEditModeMixin,
         return queryset[:self.latest_articles]
 
     def __str__(self):
-        return ugettext('%(app_title)s latest articles: %(latest_articles)s') % {
+        return gettext('%(app_title)s latest articles: %(latest_articles)s') % {
             'app_title': self.app_config.get_app_title(),
             'latest_articles': self.latest_articles,
         }
 
 
-@python_2_unicode_compatible
+
 class NewsBlogRelatedPlugin(PluginEditModeMixin, AdjustableCacheModelMixin,
                             CMSPlugin):
     # NOTE: This one does NOT subclass NewsBlogCMSPlugin. This is because this
@@ -522,10 +521,10 @@ class NewsBlogRelatedPlugin(PluginEditModeMixin, AdjustableCacheModelMixin,
         return qs
 
     def __str__(self):
-        return ugettext('Related articles')
+        return gettext('Related articles')
 
 
-@python_2_unicode_compatible
+
 class NewsBlogTagsPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
 
     def get_tags(self, request):
@@ -564,7 +563,7 @@ class NewsBlogTagsPlugin(PluginEditModeMixin, NewsBlogCMSPlugin):
         return sorted(tags, key=lambda x: x.article_count, reverse=True)
 
     def __str__(self):
-        return ugettext('%s tags') % (self.app_config.get_app_title(), )
+        return gettext('%s tags') % (self.app_config.get_app_title(), )
 
 
 @receiver(post_save, dispatch_uid='article_update_search_data')
